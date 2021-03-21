@@ -1,0 +1,22 @@
+{
+  "name": "gm_nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrei-svistunou/GM_NodeJS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrei-svistunou/GM_NodeJS/issues"
+  },
+  "homepage": "https://github.com/andrei-svistunou/GM_NodeJS#readme",
+  "devDependencies": {
+    "nodemon": "2.0.7"
+  }
+}
