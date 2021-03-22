@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rimraf ./dist && babel ./src/**/*.js -d dist",
+    "task1": "npm run build && nodemon ./dist/task1",
+    "task2": "npm run build && nodemon ./dist/task2"
   },
   "repository": {
     "type": "git",
@@ -17,6 +19,13 @@
   },
   "homepage": "https://github.com/andrei-svistunou/GM_NodeJS#readme",
   "devDependencies": {
-    "nodemon": "2.0.7"
+    "@babel/cli": "7.13.10",
+    "@babel/core": "7.13.10",
+    "@babel/preset-env": "7.13.12",
+    "nodemon": "2.0.7",
+    "rimraf": "3.0.2"
+  },
+  "dependencies": {
+    "csvtojson": "2.0.10"
   }
 }
