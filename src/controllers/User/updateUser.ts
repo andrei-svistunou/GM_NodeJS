@@ -5,22 +5,22 @@ import { UserService } from '../../services';
 type TUserRequestData = Pick<TUser, 'login' | 'password' | 'age'>;
 
 const updateUser = (req: Request, res: Response): void => {
-  const {
-    login,
-    password,
-    age,
-  }: TUserRequestData = req.body;
-  const existedUser = UserService.getUserByLogin(login);
+    const {
+        login,
+        password,
+        age
+    }: TUserRequestData = req.body;
+    const existedUser = UserService.getUserByLogin(login);
 
-  if (existedUser) {
-    const updatedUser = {
-      ...existedUser,
-      ...(password && { passwrod: password}),
-      ...(age && { age: age }),
-    };
-    UserService.saveUser(updatedUser);
-    res.json({ successful: true, msg: `${login} user was changed` });
-  }
+    if (existedUser) {
+        const updatedUser = {
+            ...existedUser,
+            ...(password && { passwrod: password }),
+            ...(age && { age })
+        };
+        UserService.saveUser(updatedUser);
+        res.json({ successful: true, msg: `${login} user was changed` });
+    }
 };
 
 export default updateUser;

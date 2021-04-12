@@ -1,7 +1,9 @@
 module.exports = {
     "parser": "babel-eslint",
-    "plugins": [
-    ],
+    "extends": [
+        'plugin:@typescript-eslint/recommended',
+        ],
+    "plugins": ['@typescript-eslint'],
     "env": {
         "browser": true,
         "node": true,
@@ -9,7 +11,11 @@ module.exports = {
         "es6": true,
         "jest": true
     },
+    "parser": '@typescript-eslint/parser',
     "parserOptions": {
+        "ecmaVersion": 2019,
+        "project": './tsconfig.json',
+        "sourceType": 'module',
         "ecmaFeatures": {
             "arrowFunctions": true,
             "blockBindings": true,
@@ -225,7 +231,6 @@ module.exports = {
             {
                 "ignoreUrls": true,
                 "ignoreComments": false,
-                "ignorePattern": "^\\s*(const|let|var)\\s+\\w+\\s+\\=\\s+\\/.*\\/(|i|g|m|ig|im|gm|igm);?$"
             }
         ],
         "max-nested-callbacks": [

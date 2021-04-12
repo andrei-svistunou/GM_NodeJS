@@ -1,5 +1,5 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
-import { ExpressJoiError } from 'express-joi-validation'
+import { ExpressJoiError } from 'express-joi-validation';
 import bodyParser from 'body-parser';
 import AppRouter from './routes';
 
@@ -10,25 +10,24 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const router = AppRouter();
 
 app.use('/', router);
-app.use((err: any|ExpressJoiError , _req: Request, res: Response, next: NextFunction) => {
-  if (err && err.type) {
-    res.status(400).json({
-      type: err.type,
-      message: err.error.toString(),
-    });
-  } else {
-    next(err);
-  }
+app.use((err: ExpressJoiError, _req: Request, res: Response, next: NextFunction) => {
+    if (err && err.type) {
+        res.status(400).json({
+            type: err.type,
+            message: err.error.toString()
+        });
+    } else {
+        return next(err);
+    }
 });
 
 app.listen(port, (err?: Error) => {
-  if (err) {
-    console.error(err.stack);
-  }
-  console.info(`Server is ready on http://localhost:${port}`);
+    if (err) {
+        console.error(err.stack);
+    }
+    console.info(`Server is ready on http://localhost:${port}`);
 });
 
-  
 
 // process.on('uncaughtException', (err: Error, origin: string) => {
 //   logger.error(`Error: ${err} | Origin: ${origin}`);
