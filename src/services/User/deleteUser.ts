@@ -1,13 +1,8 @@
-import { TUser } from '../../models/User';
-import { USERS_DB } from '../../store';
-import getUserIndex from './getUserIndex';
+import User from '../../models/User';
 
-const deleteUser = (user: TUser): void => {
-    const userIndex = getUserIndex('id', user.id);
-
-    if (userIndex >= 0) {
-        USERS_DB[userIndex].isDeleted = true;
-    }
-};
+const deleteUser = (userId: User['user_id']): Promise<[number, User[]]> => User.update(
+  { 'is_deleted': true },
+  { where: { user_id: userId } }
+);
 
 export default deleteUser;

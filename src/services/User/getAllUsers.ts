@@ -1,7 +1,6 @@
-import { TUser } from '../../models/User';
-import { USERS_DB } from '../../store';
+import User from '../../models/User';
 
-const getAllUsers = (): Array<TUser> => USERS_DB.filter(({ isDeleted }: TUser) => !isDeleted);
+const getAllUsers = (): Promise<Array<User>> => User.findAll({ where: { is_deleted: false } });
 
 export default getAllUsers;
 

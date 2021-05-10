@@ -11,21 +11,21 @@ const router = AppRouter();
 
 app.use('/', router);
 app.use((err: ExpressJoiError, _req: Request, res: Response, next: NextFunction) => {
-    if (err && err.type) {
-        res.status(400).json({
-            type: err.type,
-            message: err.error.toString()
-        });
-    } else {
-        return next(err);
-    }
+  if (err && err.type) {
+    res.status(400).json({
+      type: err.type,
+      message: err.error.toString()
+    });
+  } else {
+    return next(err);
+  }
 });
 
 app.listen(port, (err?: Error) => {
-    if (err) {
-        console.error(err.stack);
-    }
-    console.info(`Server is ready on http://localhost:${port}`);
+  if (err) {
+    console.error(err.stack);
+  }
+  console.info(`Server is ready on http://localhost:${port}`);
 });
 
 

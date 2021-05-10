@@ -1,16 +1,17 @@
 import { Request, Response } from 'express';
 import { UserService } from '../../services';
 
-const deleteUser = (req: Request, res: Response): void => {
-    const { id: userId } = req.params;
-    const existedUser = UserService.getUserById(userId);
+const deleteUser = async (req: Request, res: Response): Promise<void> => {
+  const { id: userId } = req.params;
 
-    if (existedUser) {
-        UserService.deleteUser(existedUser);
-        res.json({ successful: true, msg: 'User was deleted' });
-    } else {
-        res.json({ successfull: false, msg: 'User wasn\'t found' });
-    }
+  try {
+    await UserService.deleteUser(userId);
+
+    res.json({ successful: true, msg: 'User was deleted' });
+  } catch (e) {
+    console.error(e);
+    res.status(400).json({ successfull: false, msg: 'User wasn\'t found' });
+  }
 };
 
 export default deleteUser;

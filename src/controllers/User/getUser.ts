@@ -1,18 +1,23 @@
 import { Request, Response } from 'express';
 import { UserService } from '../../services';
 
-const getUser = (req: Request, res: Response): void => {
-    const { id: userId } = req.params;
-    const existingUser = UserService.getUserById(userId);
+const getUser = async (req: Request, res: Response): Promise<void> => {
+  const { id: userId } = req.params;
+
+  try {
+    const existingUser = await UserService.getUserById(userId);
 
     if (existingUser) {
-        res.json(existingUser);
+      res.json(existingUser);
     } else {
-        res.json({
-            successful: false,
-            msg: `${userId} user doesn't exist`
-        });
+      res.status(400).json({
+        successful: false,
+        msg: `${userId} user doesn't exist`
+      });
     }
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export default getUser;

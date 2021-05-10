@@ -218,7 +218,7 @@ module.exports = {
         ],
         "indent": [
             2,
-            4,
+            2,
             {
                 "SwitchCase": 1
             }

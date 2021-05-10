@@ -1,26 +1,20 @@
 import { Request, Response } from 'express';
-import { TUser } from 'src/models/User';
+import User from 'src/models/User';
 import { UserService } from '../../services';
 
-type TUserRequestData = Pick<TUser, 'login' | 'password' | 'age'>;
+type TUserRequestData = Pick<User, 'login' | 'password' | 'age'>;
 
-const updateUser = (req: Request, res: Response): void => {
-    const {
-        login,
-        password,
-        age
-    }: TUserRequestData = req.body;
-    const existedUser = UserService.getUserByLogin(login);
+const updateUser = async (req: Request, res: Response): Promise<void> => {
+  const { id: user_id } = req.params;
+  const updates: TUserRequestData = req.body;
 
-    if (existedUser) {
-        const updatedUser = {
-            ...existedUser,
-            ...(password && { passwrod: password }),
-            ...(age && { age })
-        };
-        UserService.saveUser(updatedUser);
-        res.json({ successful: true, msg: `${login} user was changed` });
-    }
+  try {
+    await UserService.updateUser({ user_id, ...updates } as User);
+    res.json({ successful: true, msg: `${user_id} user was changed` });
+  } catch (e) {
+    console.error(e);
+    res.json({ successful: false, msg: e.errors[0].message });
+  }
 };
 
 export default updateUser;
