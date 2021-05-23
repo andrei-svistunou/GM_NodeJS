@@ -1,12 +1,17 @@
-import { TUser } from '../../models/User';
-import { USERS_DB } from '../../store';
+import User from '../../models/User';
+import { Op } from 'sequelize';
 
-const getUsersMatchedByQuery = (query: string):TUser[] => USERS_DB.filter(({ login, isDeleted }: TUser) => login.includes(query) && !isDeleted);
-
-const getAutoSuggestUsers = (substring: string, limit = 10): TUser[] => {
-    const possibleUsers = getUsersMatchedByQuery(substring);
-
-    return possibleUsers.slice(0, limit).sort((prev: TUser, next: TUser) => prev.login.indexOf(substring) - next.login.indexOf(substring));
+const getAutoSuggestUsers = async (substring: string, limit = 10): Promise<User[]> => {
+  let users: User[] = [];
+  try {
+    const { rows } = await User.findAndCountAll({ where: { login: {
+      [Op.substring]: substring
+    } }, limit });
+    users = rows;
+  } catch (e) {
+    console.error(e);
+  } finally {
+    return users;
+  }
 };
-
 export default getAutoSuggestUsers;

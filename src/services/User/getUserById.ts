@@ -1,6 +1,11 @@
-import { TUser } from '../../models/User';
-import { USERS_DB } from '../../store';
+import User from '../../models/User';
 
-const getUserById = (userId: string): TUser => USERS_DB.find(({ id, isDeleted }: TUser): boolean => id === userId && !isDeleted);
+const getUserById = (userId: User['user_id']): Promise<User> => User.findOne({
+  attributes: ['login', 'age', 'id'],
+  where: {
+    user_id: userId,
+    is_deleted: false
+  }
+});
 
 export default getUserById;
