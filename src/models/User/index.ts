@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
 import { v4 as uuidv4 } from 'uuid';
+import Group from '../Group';
 
 interface UserAttributes {
   user_id: string;
@@ -53,6 +54,8 @@ User.init({
 });
 
 console.log(User === sequelize.models.User); // true
+User.belongsToMany(Group, { through: 'UserGroups' });
+Group.belongsToMany(User, { through: 'UserGroups' });
 
 (async () => {
   try {
