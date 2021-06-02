@@ -1,7 +1,7 @@
 module.exports = {
     "parser": "babel-eslint",
     "extends": [
-        'plugin:@typescript-eslint/recommended',
+        "plugin:@typescript-eslint/recommended",
         ],
     "plugins": ['@typescript-eslint'],
     "env": {
@@ -169,7 +169,6 @@ module.exports = {
         "no-shadow": 2,
         "no-undef-init": 2,
         "no-undef": 2,
-        "no-unused-vars": 2,
         // Node.js
         "callback-return": 2,
         "no-mixed-requires": 2,
