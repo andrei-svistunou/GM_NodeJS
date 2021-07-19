@@ -1,29 +1,33 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
-import { ExpressJoiError } from 'express-joi-validation';
 import { urlencoded } from 'body-parser';
 import AppRouter from './routes';
+import { LoggerService } from './services';
+import LoggerMiddleware from './middlewares/LoggerMiddleware';
+import ErrorHandler from './middlewares/ErrorHandler/ErrorHandler';
 
 const port: number = parseInt(process.env.PORT, 10) || 3003;
 
+process.on('unhandledRejection', error => {
+  throw error
+ })
+
+process.on('uncaughtException', error => {
+  LoggerService.error(error.stack); 
+  process.exit(1)
+});
+
 const app: Application = express();
 app.use(urlencoded({ extended: false }));
-const router = AppRouter();
 
-app.use('/', router);
-app.use((err: ExpressJoiError, _req: Request, res: Response, next: NextFunction) => {
-  if (err && err.type) {
-    res.status(400).json({
-      type: err.type,
-      message: err.error.toString()
-    });
-  } else {
-    return next(err);
-  }
-});
+app.use(LoggerMiddleware());
+
+app.use('/', AppRouter());
+
+app.use(ErrorHandler);
 
 app.listen(port, (err?: Error) => {
   if (err) {
-    console.error(err.stack);
+    LoggerService.error(err.stack);
   }
-  console.info(`Server is ready on http://localhost:${port}`);
+  LoggerService.info(`Server is ready on http://localhost:${port}`);
 });
