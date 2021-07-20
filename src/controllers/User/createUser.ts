@@ -1,7 +1,8 @@
 import { Response } from 'express';
 import { TValidatedRequest } from '../../middlewares/User';
 import User from '../../models/User';
-import { UserService, LoggerService } from '../../services';
+import * as UserService from '../../services/User';
+import { LoggerService } from '../../services/Logger';
 
 type TUserRequestData = Pick<User, 'login' | 'password' | 'age'>;
 

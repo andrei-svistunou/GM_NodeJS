@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import User from 'src/models/User';
-import { UserService, LoggerService } from '../../services';
+import * as UserService from '../../services/User';
+import { LoggerService } from '../../services/Logger';
 
 type TUserRequestData = Pick<User, 'login' | 'password' | 'age'>;
 
@@ -14,7 +15,7 @@ const updateUser = async (req: Request, res: Response): Promise<void> => {
     res.json({ successful: true, msg: `${user_id} user was changed` });
   } catch (e) {
     LoggerService.error(e.message);
-    res.json({ successful: false, msg: e.errors[0].message });
+    res.json({ successful: false, msg: e.message });
   }
 };
 
