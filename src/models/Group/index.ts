@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
 import { v4 as uuidv4 } from 'uuid';
+import dotenv from 'dotenv';
 
 export type Permissions = 'READ' | 'WRITE' | 'DELETE' | 'SHARE' | 'UPLOAD_FILES';
 
@@ -9,7 +10,9 @@ interface IGroup {
   permissions: Permissions[];
 }
 
-const sequelize = new Sequelize('postgres://fyshslnh:yCFlwJdgqT8iNtRCnQElA-nHMyDZ7IGX@tai.db.elephantsql.com:5432/fyshslnh');
+const config = dotenv.config();
+
+const sequelize = new Sequelize(config.parsed.DB_URI);
 
 class Group extends Model<IGroup>
   implements IGroup {

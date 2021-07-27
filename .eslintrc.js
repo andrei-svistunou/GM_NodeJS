@@ -2,6 +2,7 @@ module.exports = {
     "parser": "babel-eslint",
     "extends": [
         "plugin:@typescript-eslint/recommended",
+        'plugin:jest/recommended',
         ],
     "plugins": ['@typescript-eslint'],
     "env": {

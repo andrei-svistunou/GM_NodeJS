@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { UserService, LoggerService } from '../../services';
+import * as UserService from '../../services/User';
+import { LoggerService } from '../../services/Logger';
 
 const deleteUser = async (req: Request, res: Response): Promise<void> => {
   const { id: userId } = req.params;
@@ -10,7 +11,7 @@ const deleteUser = async (req: Request, res: Response): Promise<void> => {
     res.json({ successful: true, msg: 'User was deleted' });
   } catch (e) {
     LoggerService.error(e.message);
-    res.status(400).json({ successfull: false, msg: 'User wasn\'t found' });
+    res.status(400).json({ successful: false, msg: 'User wasn\'t found' });
   }
 };
 

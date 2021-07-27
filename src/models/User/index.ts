@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
 import { v4 as uuidv4 } from 'uuid';
+import dotenv from 'dotenv';
 import Group from '../Group';
 
 interface UserAttributes {
@@ -10,8 +11,9 @@ interface UserAttributes {
   is_deleted: boolean;
 }
 
-const sequelize = new Sequelize('postgres://fyshslnh:yCFlwJdgqT8iNtRCnQElA-nHMyDZ7IGX@tai.db.elephantsql.com:5432/fyshslnh');
+const config = dotenv.config();
 
+const sequelize = new Sequelize(config.parsed.DB_URI);
 class User extends Model<UserAttributes>
   implements UserAttributes {
     public user_id!: string;
