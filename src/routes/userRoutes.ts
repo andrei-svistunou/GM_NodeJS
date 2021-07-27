@@ -5,11 +5,12 @@ import { UserController } from '../controllers';
 const UserRouter = (): Router => {
   const userRouter = express.Router();
 
-  userRouter.get('/all', UserController.getUsers);
-  userRouter.get('/:id', UserController.getUser);
-  userRouter.post('/add', UserValidator.validateUser, UserController.createUser);
-  userRouter.post('/:id/update', UserValidator.validateUser, UserController.updateUser);
-  userRouter.delete('/:id', UserController.deleteUser);
+  userRouter.get('/all', UserValidator.validateAccess, UserController.getUsers);
+  userRouter.get('/:id', UserValidator.validateAccess, UserController.getUser);
+  userRouter.post('/add', UserValidator.validateAccess, UserValidator.validateUser, UserController.createUser);
+  userRouter.post('/:id/update', UserValidator.validateAccess, UserValidator.validateUser, UserController.updateUser);
+  userRouter.delete('/:id', UserValidator.validateAccess, UserController.deleteUser);
+  userRouter.post('/login', UserController.loginUser);
 
   return userRouter;
 };

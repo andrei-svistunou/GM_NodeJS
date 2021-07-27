@@ -1,5 +1,7 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import { urlencoded } from 'body-parser';
+import cors from 'cors';
+
 import AppRouter from './routes';
 import { LoggerService } from './services';
 import LoggerMiddleware from './middlewares/LoggerMiddleware';
@@ -17,6 +19,9 @@ process.on('uncaughtException', error => {
 });
 
 const app: Application = express();
+
+app.use(cors());
+
 app.use(urlencoded({ extended: false }));
 
 app.use(LoggerMiddleware());
